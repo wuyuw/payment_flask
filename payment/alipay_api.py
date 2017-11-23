@@ -27,26 +27,26 @@ def alipay_query(order_id):
                 time.sleep(5)
                 continue
             elif "TRADE_SUCCESS" == trade_status:
-                return {"result": 1, "message": "支付成功"}
+                return {"result": 1, "message": "支付成功", "status": trade_status}
             elif "WAIT_BUYER_PAY" == trade_status:
                 time.sleep(5)
                 continue
             else:
-                return {"result": 0, "message": "支付失败"}
+                return {"result": 0, "message": "支付失败", "status": trade_status}
         elif "40004" == code:
             time.sleep(10)
             continue
         else:
-            return {"result": 0, "message": "支付失败"}
+            return {"result": 0, "message": "支付失败", "code": code}
 
 
 if __name__ == '__main__':
-    order_id = "201711231124515"
+    order_id = "201711231217515"
     total_amount = "0.01"
-    subject = "515测试订单01"
+    subject = "515测试订单03"
     pay_url = alipay_pay(order_id=order_id, total_amount=total_amount, subject=subject)
     print(pay_url)
-    time.sleep(30)
+    time.sleep(20)
     res = alipay_query(order_id=order_id)
     print(res)
 
